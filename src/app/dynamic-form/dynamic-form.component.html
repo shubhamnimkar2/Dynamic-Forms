@@ -1,0 +1,82 @@
+<div>
+  <h3>{{ formData.formTitle }}</h3>
+</div>
+
+<form [formGroup]="registrationForm" class="row g-3">
+  <ng-container *ngFor="let control of formData.formControls">
+    <div
+      *ngIf="['text', 'email', 'number', 'date'].includes(control.type)"
+      [class]="control.class"
+    >
+      <label class="form-label">{{ control.label }}</label>
+      <input
+        [type]="control.type"
+        class="form-control"
+        [id]="control.name"
+        [formControlName]="control.name"
+      />
+      <small
+        class="text-danger"
+        *ngIf="
+          registrationForm.get(control.name)?.invalid &&
+          registrationForm.get(control.name)?.touched
+        "
+        >{{ getValidationErrors(control) }}</small
+      >
+    </div>
+
+    <div *ngIf="control.type === 'select'" [class]="control.class">
+      <label class="form-label">{{ control.label }}</label>
+      <select class="form-select">
+        <option selected value="">Open this select menu</option>
+        <ng-container *ngFor="let item of control.options">
+          <option [value]="item.value">{{ item.value }}</option>
+        </ng-container>
+      </select>
+      <small
+        class="text-danger"
+        *ngIf="
+          registrationForm.get(control.name)?.invalid &&
+          registrationForm.get(control.name)?.touched
+        "
+        >{{ getValidationErrors(control) }}</small
+      >
+    </div>
+
+    <div *ngIf="control.type === 'radio'" [class]="control.class">
+      <label class="form-label">{{ control.label }}</label>
+      <ng-container *ngFor="let item of control.radioOptions">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            [type]="control.type"
+            [name]="control.name"
+            [id]="item"
+            [formControlName]="control.name"
+            [value]="item"
+          />
+          <label class="form-check-label" [for]="control.name">
+            {{ item }}
+          </label>
+        </div>
+      </ng-container>
+      <small
+        class="text-danger"
+        *ngIf="
+          registrationForm.get(control.name)?.invalid &&
+          registrationForm.get(control.name)?.touched
+        "
+        >{{ getValidationErrors(control) }}</small
+      >
+    </div>
+  </ng-container>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary mx-2" (click)="onSubmit()">
+      {{ formData.savebtnTitle }}
+    </button>
+    <button type="reset" class="btn btn-primary mx-2" (click)="onReset()">
+      {{ formData.resetbtnTitle }}
+    </button>
+  </div>
+</form>
