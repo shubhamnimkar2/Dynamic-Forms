@@ -49,13 +49,12 @@
         <div class="form-check">
           <input
             class="form-check-input"
-            [type]="control.type"
-            [name]="control.name"
-            [id]="item"
+            type="radio"
+            [id]="item.toLocaleLowerCase()"
+            [value]="item.toLocaleLowerCase()"
             [formControlName]="control.name"
-            [value]="item"
           />
-          <label class="form-check-label" [for]="control.name">
+          <label class="form-check-label" [for]="item.toLocaleLowerCase()">
             {{ item }}
           </label>
         </div>
