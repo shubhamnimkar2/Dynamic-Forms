@@ -8,7 +8,7 @@
       *ngIf="['text', 'email', 'number', 'date'].includes(control.type)"
       [class]="control.class"
     >
-      <label class="form-label">{{ control.label }}</label>
+      <label class="form-label" [for]="control.name">{{ control.label }}</label>
       <input
         [type]="control.type"
         class="form-control"
